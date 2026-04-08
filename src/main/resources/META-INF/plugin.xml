@@ -1,0 +1,39 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>com.single.ton.dxf</id>
+
+    <name>DXF Viewer</name>
+
+    <vendor email="volodymyr4509@gmail.com" url="https://github.com/volodymyr4509/dxf-plugin">DXF Plugin</vendor>
+
+    <description><![CDATA[
+        Open and navigate DXF (Drawing Exchange Format) CAD files inside IntelliJ IDEA.<br/>
+        Adds code-folding gutter buttons that let you collapse and expand:<br/>
+        <ul>
+          <li>Top-level DXF sections (HEADER, CLASSES, TABLES, BLOCKS, ENTITIES, OBJECTS)</li>
+          <li>Symbol tables inside the TABLES section (TABLE … ENDTAB)</li>
+          <li>Block definitions inside the BLOCKS section (BLOCK … ENDBLK)</li>
+        </ul>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+
+        <!-- Register the .dxf file type -->
+        <fileType name="DXF"
+                  implementationClass="com.single.ton.dxf.DxfFileType"
+                  fieldName="INSTANCE"
+                  language="DXF"
+                  extensions="dxf"/>
+
+        <!-- Minimal parser so the platform can build a PSI tree for DXF files -->
+        <lang.parserDefinition language="DXF"
+                               implementationClass="com.single.ton.dxf.DxfParserDefinition"/>
+
+        <!-- Folding builder that adds section / table / block fold regions -->
+        <lang.foldingBuilder language="DXF"
+                             implementationClass="com.single.ton.dxf.DxfFoldingBuilder"/>
+
+    </extensions>
+</idea-plugin>
